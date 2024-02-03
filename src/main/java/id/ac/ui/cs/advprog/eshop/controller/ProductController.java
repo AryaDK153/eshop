@@ -54,6 +54,8 @@ public class ProductController {
     public String editOrDeletePost(@RequestParam int index, @RequestParam("save-or-delete") String saveOrDelete, @ModelAttribute Product product, Model model) {
         if (Objects.equals(saveOrDelete, "save")) {
             service.save(index, product);
+        } else if (Objects.equals(saveOrDelete, "delete")) {
+            service.delete(index);
         }
         return "redirect:list";
     }
