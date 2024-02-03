@@ -20,7 +20,10 @@
         </thead>
         <tbody>
         <tr th:each="product: ${products}">
-            <td th:text="${product.productName}"></td>
+            <td>
+                <a th:text="${product.productName}"></a>
+                <a th:href="@{/product/edit-or-delete(name=${product.productName})}">Edit/Delete</a>
+            </td>
             <td th:text="${product.productQuantity}"></td>
         </tr>
         </tbody>
