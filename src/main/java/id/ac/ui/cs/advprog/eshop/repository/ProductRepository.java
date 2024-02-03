@@ -21,6 +21,9 @@ public class ProductRepository {
         productData.set(index, product);
         return product;
     }
+    public void delete(int index) {
+        productData.remove(index);
+    }
 
     public Iterator<Product> findAll() {
         return productData.iterator();
