@@ -1,0 +1,5 @@
+# Reflection
+## Exercise 1 - Reflection 1
+Before, I was unsure to how I should name my functions and usually I would write long comments explaining the obvious things, thus knowing about clean codes lowered my workload. Branching still fells like it may not be needed when doing simple small projects and by yourself, but it is a very good, simple, and easy way to keep track of version changes when dealing with apps with many features. We do need to keep track of how much branch we make, too much can complicate things and definitely waste resources.
+
+There is a small issue I found on my source code. There is no way to uniquely identify each products, which made me resort to identifying each product with product name. The problem arrives when you input 2 different products with the same name, because only now when I'm writing this reflection note that I realize that I need to implement name checking when using this method, so that users can't give 2 or more products with the same name when creating or editing a product.
