@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 @Repository
 public class ProductRepository {
@@ -16,7 +17,13 @@ public class ProductRepository {
         return product;
     }
 
+    public Product save(int index, Product product) {
+        productData.set(index, product);
+        return product;
+    }
+
     public Iterator<Product> findAll() {
         return productData.iterator();
     }
+
 }

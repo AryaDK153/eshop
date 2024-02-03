@@ -5,12 +5,10 @@ import id.ac.ui.cs.advprog.eshop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/product")
@@ -37,5 +35,26 @@ public class ProductController {
         List<Product> allproducts = service.findAll();
         model.addAttribute("products", allproducts);
         return "productList";
+    }
+
+    @GetMapping("/edit-or-delete")
+    public String editOrDeletePage(@RequestParam String name, Model model) {
+        int index = service.findIndex(name);
+        if (index != -1) {
+            List<Product> allproducts = service.findAll();
+            Product product = allproducts.get(index);
+            model.addAttribute("product", product);
+            model.addAttribute("index", index);
+            return "editOrDelete";
+        }
+        return "redirect:list";
+    }
+
+    @PostMapping("/edit-or-delete")
+    public String editOrDeletePost(@RequestParam int index, @RequestParam("save-or-delete") String saveOrDelete, @ModelAttribute Product product, Model model) {
+        if (Objects.equals(saveOrDelete, "save")) {
+            service.save(index, product);
+        }
+        return "redirect:list";
     }
 }
