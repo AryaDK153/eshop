@@ -25,22 +25,26 @@ public class CreateProductFunctionalTest {
     private String baseUrl;
     @BeforeEach
     void setupTest() {
-        baseUrl = String.format("%s:%d", testBaseUrl, serverPort) + "product/create";
+        baseUrl = String.format("%s:%d/product/create", testBaseUrl, serverPort);
     }
     @Test
     void createNewProduct_isCorrect(EdgeDriver driver) throws Exception {
         driver.get(baseUrl);
-        WebElement checkInput = driver.findElement(By.name("submit"));
-        checkInput.click();
 
-        WebElement nameInput = driver.findElement(By.name("name_input"));
+        WebElement nameInput = driver.findElement(By.id("nameInput"));
         nameInput.clear();
-        WebElement qtyInput = driver.findElement(By.name("qty_input"));
+        WebElement qtyInput = driver.findElement(By.id("quantityInput"));
         qtyInput.clear();
 
         String name = "Sampo Cap Bambang";
         String qty = "100";
         nameInput.sendKeys(name);
         qtyInput.sendKeys(qty);
+
+        WebElement checkInput = driver.findElement(By.name("submit"));
+        checkInput.click();
+
+        String goToPageTitle = driver.getTitle();
+        assertEquals("Product List", goToPageTitle);
     }
 }
