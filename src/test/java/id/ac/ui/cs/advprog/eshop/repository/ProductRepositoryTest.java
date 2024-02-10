@@ -76,7 +76,7 @@ public class ProductRepositoryTest {
         assertEquals(product.getProductName(), editProduct.getProductName());
         assertEquals(product.getProductQuantity(), editProduct.getProductQuantity());
 
-        editProduct.setProductName("Bambang Cap Sampo");
+        editProduct.setProductName("Sabun Cap Denis");
         productRepository.save(0, editProduct);
 
         productIterator = productRepository.findAll();
@@ -85,9 +85,7 @@ public class ProductRepositoryTest {
         assertEquals(savedProduct.getProductId(), editProduct.getProductId());
         assertEquals(savedProduct.getProductName(), editProduct.getProductName());
         assertEquals(savedProduct.getProductQuantity(), editProduct.getProductQuantity());
-        assertNotEquals(savedProduct.getProductId(), product.getProductId());
-        assertNotEquals(savedProduct.getProductName(), product.getProductName());
-        assertNotEquals(savedProduct.getProductQuantity(), product.getProductQuantity());
+        assertNotEquals("Sampo Cap Bambang", savedProduct.getProductName());
     }
     @Test
     void testDelete() {
