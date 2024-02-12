@@ -1,0 +1,23 @@
+name: SonarCloud Analysis
+
+on:
+  push:
+
+jobs:
+  sonarcloud:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Check out the Git repository
+        uses: actions/checkout@v4
+      - name: Set up Java toolchain
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "21"
+          cache: "gradle"
+      - name: Run SonarCloud analysis
+        uses: sonarsource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
