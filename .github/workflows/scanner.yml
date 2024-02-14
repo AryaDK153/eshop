@@ -16,8 +16,21 @@ jobs:
           distribution: "temurin"
           java-version: "21"
           cache: "gradle"
+      - name: Cache Sonar Packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+      - name: Cache Gradle packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.gradle/cache
+          key: ${{ runner.os }}-gradle
+      - name: Set gradlew as executable
+        run: chmod +x ./gradlew
       - name: Run SonarCloud analysis
         uses: sonarsource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: ./gradlew sonar -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }} -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }} --info
