@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
 
 @Repository
 public class ProductRepository {
@@ -17,9 +16,9 @@ public class ProductRepository {
         return product;
     }
 
-    public Product save(int index, Product product) {
+    public void save(int index, Product product) {
         productData.set(index, product);
-        return product;
+//        return product;
     }
     public void delete(int index) {
         productData.remove(index);
