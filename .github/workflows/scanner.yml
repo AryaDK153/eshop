@@ -15,12 +15,12 @@ jobs:
         with:
           java-version: "21"
       - name: Cache Sonar Packages
-        uses: actions/cache@v2
+        uses: actions/cache@v1
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
       - name: Cache Gradle packages
-        uses: actions/cache@v2
+        uses: actions/cache@v1
         with:
           path: ~/.gradle/cache
           key: ${{ runner.os }}-gradle
