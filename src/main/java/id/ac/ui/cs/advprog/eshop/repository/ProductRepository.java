@@ -16,9 +16,9 @@ public class ProductRepository {
         return product;
     }
 
-    public void save(int index, Product product) {
+    public Product save(int index, Product product) {
         productData.set(index, product);
-//        return product;
+        return product;
     }
     public void delete(int index) {
         productData.remove(index);
