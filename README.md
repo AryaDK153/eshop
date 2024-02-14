@@ -11,3 +11,10 @@ There is a small issue I found on my source code. There is no way to uniquely id
 
 ## Module 2
 ### 4.2 Reflection
+1. Code quality issues
+a. remove field injection (autowired) and use constructor injection instead
+- was not fixed,  but accepted instead. when constructor injection is used, some of the tests broke. with not much time left, I decided to keep the code as is.
+b. define constraint instead of rewriting a value
+- cleaned up some redundancy for redirect. created a new static final variable.
+c. remove public modifiers from tests
+- switched tests' modifiers to default (package-private) instead of public.
