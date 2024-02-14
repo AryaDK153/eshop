@@ -15,8 +15,8 @@ There is a small issue I found on my source code. There is no way to uniquely id
 ### 4.2 Reflection
 Code quality issues
 1. remove field injection (autowired) and use constructor injection instead
-- was not fixed,  but accepted instead. when constructor injection is used, some of the tests broke. with not much time left, I decided to keep the code as is.
+  was not fixed,  but accepted instead. when constructor injection is used, some of the tests broke. with not much time left, I decided to keep the code as is.
 2. define constraint instead of rewriting a value
-- cleaned up some redundancy for redirect. created a new static final variable.
+  cleaned up some redundancy for redirect. created a new static final variable.
 3. remove public modifiers from tests
-- switched tests' modifiers to default (package-private) instead of public.
+  switched tests' modifiers to default (package-private) instead of public.
