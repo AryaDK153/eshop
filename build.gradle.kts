@@ -52,17 +52,15 @@ tasks.test {
 
 tasks.jacocoTestReport {
 	dependsOn(tasks.test)
-	afterEvaluate {
-		classDirectories.setFrom(files(classDirectories.files.map {
-			fileTree(it) {
-				exclude("**/EshopApplication.class")
-			}
-		}))
-		reports {
-			xml.required.set(true)
-			csv.required.set(true)
-			html.outputLocation.set(layout.buildDirectory.dir("jacocoHtml"))
+	classDirectories.setFrom(files(classDirectories.files.map {
+		fileTree(it).apply {
+			exclude("src/main/java/id/ac/ui/cs/advprog/eshop/EshopApplication.java")
 		}
+	}))
+	reports {
+		xml.required.set(true)
+        csv.required.set(true)
+        html.outputLocation.set(layout.buildDirectory.dir("jacocoHtml"))
 	}
 }
 
