@@ -17,6 +17,8 @@ public class ProductController {
     @Autowired
     private ProductService service;
 
+    private static final String SHOW_LIST = "redirect:list";
+
     @GetMapping("/create")
     public String createProductPage(Model model) {
         Product product = new Product();
@@ -27,7 +29,7 @@ public class ProductController {
     @PostMapping("/create")
     public String createProductPost(@ModelAttribute Product product, Model model) {
         service.create(product);
-        return "redirect:list";
+        return SHOW_LIST;
     }
 
     @GetMapping("/list")
@@ -47,7 +49,7 @@ public class ProductController {
             model.addAttribute("index", index);
             return "editOrDelete";
         }
-        return "redirect:list";
+        return SHOW_LIST;
     }
 
     @PostMapping("/edit-or-delete")
@@ -57,6 +59,6 @@ public class ProductController {
         } else if (Objects.equals(saveOrDelete, "delete")) {
             service.delete(index);
         }
-        return "redirect:list";
+        return SHOW_LIST;
     }
 }
