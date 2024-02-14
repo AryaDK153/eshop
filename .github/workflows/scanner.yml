@@ -13,9 +13,7 @@ jobs:
       - name: Set up Java toolchain
         uses: actions/setup-java@v2
         with:
-          distribution: "temurin"
           java-version: "21"
-          cache: "gradle"
       - name: Cache Sonar Packages
         uses: actions/cache@v2
         with:
@@ -32,6 +30,7 @@ jobs:
         run: ./gradlew test jacocoTestReport
       - name: Run SonarCloud analysis
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         run: ./gradlew sonar -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }} -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }} --info --warning-mode all
