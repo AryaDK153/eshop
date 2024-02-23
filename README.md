@@ -24,13 +24,15 @@ Code quality issues
 ## Module 3
 ### S.O.L.I.D Principle
 Applied in this project:
-1. SRP - productController.java
-  > Before applying, the productController.java was used as the controller for both product related pages and car related pages. During this tutorial I decided to separate them into 2 classes. As SRP requires us to implement, a class should have only one responsibility or encapsulate only one aspect of the software's functionality. Though the functionality seemed similar between both controllers, the classes they work with differs. It would be better to have them grouped accordingly.
-2. OCP
-  > 
-3. LSP
-  > 
-4. ISP
-  > 
+1. SRP - ProductController.java
+  > Before applying, the ProductController.java was used as the controller for both product related pages and car related pages. During this tutorial I decided to separate them into 2 classes. As SRP requires us to implement, a class should have only one responsibility or encapsulate only one aspect of the software's functionality. Though the functionality seemed similar between both controllers, the classes they work with differs. It would be better to have them grouped accordingly.
+2. OCP - Car.java
+  > Before applying, Car.java and Product.java were two different classes. In the real world, anything can be a product as long as it was made. Thus, after some consideration, I have decided to make the Car a child of Product. This is due to the fact that both Car and Product has similar attributes with Car having one more, which is carColor.
+
+  > One particular issue I might be having is that I'm just starting to understand this principle near the deadline, so for now, the naming for the attributes still uses the naming for product only (productId, productName, productQuantity).
+3. LSP - Idea - Repository
+  > Due to the scoring criteria of our learning module and the fact that I'm not quite sure how connected the Product and Car classes are intended to be, I will leave this for future works. But in any case, I want to combine both Car and Product repository into one single Repository class. By doing so, we should be able to reduce page redundancy. Currently, we have both Product pages and Car pages doing similar things but for different classes. However, with the Car class being turned into a child of the Product class, we can combine both classes' pages into only Product pages. With this, and some altering with the create() function, we can create, read, update, and delete both classes using the same pages. We can even add things like showByClass() to the list page as a filter so that only certain classes can appear in the list at a moment.
+4. ISP - ProductService.java and CarService.java
+  > If we are to ignore the integrations proposed by point 2 and 3, I'd say ISP is well implemented by separating ProductService.java and CarService.java. Though, even when taking into account the integrations from point 2 and 3, it is theoretically possible to have some service methods combined between the two and some other methods separate. This opens up a possibility to add different interfaces for classes who are children of the Product class. 
 5. DIP
-  > 
+  > The concept of abstraction has already been used for both CarService and ProductService.
