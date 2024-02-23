@@ -20,3 +20,17 @@ Code quality issues
   > cleaned up some redundancy for redirect. created a new static final variable.
 3. remove public modifiers from tests
   > switched tests' modifiers to default (package-private) instead of public.
+
+## Module 3
+### S.O.L.I.D Principle
+Applied in this project:
+1. SRP - productController.java
+  > Before applying, the productController.java was used as the controller for both product related pages and car related pages. During this tutorial I decided to separate them into 2 classes. As SRP requires us to implement, a class should have only one responsibility or encapsulate only one aspect of the software's functionality. Though the functionality seemed similar between both controllers, the classes they work with differs. It would be better to have them grouped accordingly.
+2. OCP
+  > 
+3. LSP
+  > 
+4. ISP
+  > 
+5. DIP
+  > 
