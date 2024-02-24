@@ -15,7 +15,6 @@ public class CarServiceImpl implements CarService {
     private CarRepository carRepository;
     @Override
     public Car create(Car car) {
-        // TODO
         carRepository.create(car);
         return car;
     }
@@ -30,19 +29,16 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public Car findById(String carId) {
-        Car car = carRepository.findById(carId);
-        return car;
+        return carRepository.findById(carId);
     }
 
     @Override
     public void update(String carId, Car car) {
-        // TODO
         carRepository.update(carId, car);
     }
 
     @Override
     public void deleteCarById(String carId) {
-        // TODO
         carRepository.delete(carId);
     }
 }
