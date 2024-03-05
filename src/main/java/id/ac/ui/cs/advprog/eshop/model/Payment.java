@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import enums.PaymentMethod;
+import enums.PaymentStatus;
 import lombok.Getter;
 
 @Getter
@@ -37,9 +38,9 @@ public class Payment {
                 }
             }
             if (code.length() != 16 || !code.startsWith("ESHOP") || numericCount != 8) {
-                this.status = "REJECTED";
+                this.status = PaymentStatus.REJECTED.getValue();
             } else {
-                this.status = "SUCCESS";
+                this.status = PaymentStatus.SUCCESS.getValue();
             }
         }
         if (method.equals(PaymentMethod.CASH_ON_DELIVERY.getValue())) {
@@ -55,21 +56,20 @@ public class Payment {
             }
             String address = paymentData.get("address");
             if (address.isEmpty()) {
-                this.status = "REJECTED";
+                this.status = PaymentStatus.REJECTED.getValue();
             } else {
                 String deliveryFee = paymentData.get("deliveryFee");
                 if (deliveryFee.isEmpty()) {
-                    this.status = "REJECTED";
+                    this.status = PaymentStatus.REJECTED.getValue();
                 } else {
-                    this.status = "SUCCESS";
+                    this.status = PaymentStatus.SUCCESS.getValue();
                 }
             }
         }
     }
 
 //    public void setStatus(String status) {
-//        String[] statusList = {"SUCCESS", "REJECTED"};
-//        if (Arrays.stream(statusList).noneMatch(item -> (item.equals(status)))) {
+//        if (!PaymentStatus.contains(status)) {
 //            throw new IllegalArgumentException();
 //        } else {
 //            this.status = status;
