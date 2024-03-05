@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import enums.PaymentMethod;
 import lombok.Getter;
 
 @Getter
@@ -18,14 +19,13 @@ public class Payment {
         this.method = method;
         this.paymentData = paymentData;
 
-        String[] methodList = {"VOUCHER_CODE", "CASH_ON_DELIVERY"};
-        if (Arrays.stream(methodList).noneMatch(item -> (item.equals(method)))) {
+        if (!PaymentMethod.contains(method)) {
             throw new IllegalArgumentException();
         } else {
             this.method = method;
         }
 
-        if (method.equals("VOUCHER_CODE")) {
+        if (method.equals(PaymentMethod.VOUCHER_CODE.getValue())) {
             if (paymentData.size() != 1 || !paymentData.containsKey("voucherCode")) {
                 throw new IllegalArgumentException();
             }
@@ -42,7 +42,7 @@ public class Payment {
                 this.status = "SUCCESS";
             }
         }
-        if (method.equals("CASH_ON_DELIVERY")) {
+        if (method.equals(PaymentMethod.CASH_ON_DELIVERY.getValue())) {
             String[] mustHaveKeys = {"address", "deliveryFee"};
             if (paymentData.size() != 2) {
                 throw new IllegalArgumentException();
