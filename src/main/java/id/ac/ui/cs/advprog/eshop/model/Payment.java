@@ -26,6 +26,9 @@ public class Payment {
         }
 
         if (method.equals("VOUCHER_CODE")) {
+            if (paymentData.size() != 1 || !paymentData.containsKey("voucherCode")) {
+                throw new IllegalArgumentException();
+            }
             String code = paymentData.get("voucherCode");
             int numericCount = 0;
             for (int i = 0; i < code.length(); i++) {
@@ -38,29 +41,38 @@ public class Payment {
             } else {
                 this.status = "SUCCESS";
             }
-        } else {
-            if (method.equals("CASH_ON_DELIVERY")) {
-                String address = paymentData.get("address");
-                if (address.isEmpty()) {
+        }
+        if (method.equals("CASH_ON_DELIVERY")) {
+            String[] mustHaveKeys = {"address", "deliveryFee"};
+            if (paymentData.size() != 2) {
+                throw new IllegalArgumentException();
+            } else {
+                for (String key : mustHaveKeys) {
+                    if (!paymentData.containsKey(key)) {
+                        throw new IllegalArgumentException();
+                    }
+                }
+            }
+            String address = paymentData.get("address");
+            if (address.isEmpty()) {
+                this.status = "REJECTED";
+            } else {
+                String deliveryFee = paymentData.get("deliveryFee");
+                if (deliveryFee.isEmpty()) {
                     this.status = "REJECTED";
                 } else {
-                    String deliveryFee = paymentData.get("deliveryFee");
-                    if (deliveryFee.isEmpty()) {
-                        this.status = "REJECTED";
-                    } else {
-                        this.status = "SUCCESS";
-                    }
+                    this.status = "SUCCESS";
                 }
             }
         }
     }
 
-    public void setStatus(String status) {
-        String[] statusList = {"SUCCESS", "REJECTED"};
-        if (Arrays.stream(statusList).noneMatch(item -> (item.equals(status)))) {
-            throw new IllegalArgumentException();
-        } else {
-            this.status = status;
-        }
-    }
+//    public void setStatus(String status) {
+//        String[] statusList = {"SUCCESS", "REJECTED"};
+//        if (Arrays.stream(statusList).noneMatch(item -> (item.equals(status)))) {
+//            throw new IllegalArgumentException();
+//        } else {
+//            this.status = status;
+//        }
+//    }
 }
