@@ -23,7 +23,7 @@ public class PaymentRepositoryTest {
         Map<String,String> paymentData2= new HashMap<>();
         paymentData2.put("address", "Jl Jayapura XV");
         paymentData2.put("deliveryFee", "10000");
-        Payment payment2 = new Payment("0fd4b6f3-33fd-4948-84a1-06c7d2b58ef8", PaymentMethod.CASH_ON_DELIVERY.getValue(), paymentData2);
+        Payment payment2 = new Payment("b3a5d496-7e2f-476e-bcd9-f95a1d305c4a", PaymentMethod.CASH_ON_DELIVERY.getValue(), paymentData2);
 
         paymentList = new ArrayList<>();
         paymentList.add(payment1);
