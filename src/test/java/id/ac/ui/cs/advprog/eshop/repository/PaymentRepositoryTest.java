@@ -3,8 +3,10 @@ package id.ac.ui.cs.advprog.eshop.repository;
 import enums.PaymentMethod;
 import id.ac.ui.cs.advprog.eshop.model.Order;
 import id.ac.ui.cs.advprog.eshop.model.Payment;
+import id.ac.ui.cs.advprog.eshop.model.Product;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.internal.matchers.Or;
 
 import java.util.*;
 
@@ -12,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class PaymentRepositoryTest {
     PaymentRepository paymentRepository;
-    List<Payment> paymentList;
+    List<Map<Payment, Order>> paymentList;
     @BeforeEach
     void setUp(){
         paymentRepository = new PaymentRepository();
@@ -25,20 +27,42 @@ public class PaymentRepositoryTest {
         paymentData2.put("deliveryFee", "10000");
         Payment payment2 = new Payment("b3a5d496-7e2f-476e-bcd9-f95a1d305c4a", PaymentMethod.CASH_ON_DELIVERY.getValue(), paymentData2);
 
+        List<Product> products = new ArrayList<>();
+        Product product1 = new Product();
+        product1.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
+        product1.setProductName("Sampo Cap Bambang");
+        product1.setProductQuantity(2);
+        products.add(product1);
+
+        Order order = new Order("13652556-012a-4c07-b546-54eb1396d79b", products, 1708560000L, "Safira Sudrajat");
+        Map<Payment, Order> pair1 = new HashMap<>();
+        pair1.put(payment1, order);
+        Map<Payment, Order> pair2 = new HashMap<>();
+        pair2.put(payment2, order);
+
         paymentList = new ArrayList<>();
-        paymentList.add(payment1);
-        paymentList.add(payment2);
+        paymentList.add(pair1);
+        paymentList.add(pair2);
     }
     @Test
     void testSaveCreate(){
-        Payment payment = paymentList.get(1);
-        Payment result = paymentRepository.save(payment);
+        Map<Payment, Order> pair = paymentList.get(1);
+        Map<Payment, Order> result = paymentRepository.save(pair);
 
-        Payment findResult = paymentRepository.findById(payment.getId());
-        assertEquals(payment.getId(), findResult.getId());
-        assertEquals(payment.getMethod(), findResult.getMethod());
-        assertEquals(payment.getPaymentData(), findResult.getPaymentData());
-        assertEquals(payment.getStatus(), findResult.getStatus());
+        Payment payment = result.keySet().stream().toList().get(0);
+        Map<Payment, Order> findResult = paymentRepository.findById(payment.getId());
+        Payment resultPayment = findResult.keySet().stream().toList().get(0);
+        assertEquals(payment.getId(), resultPayment.getId());
+        assertEquals(payment.getMethod(), resultPayment.getMethod());
+        assertEquals(payment.getPaymentData(), resultPayment.getPaymentData());
+        assertEquals(payment.getStatus(), resultPayment.getStatus());
+        Order resultOrder = findResult.get(resultPayment);
+        Order orderComparer = pair.get(payment);
+        assertEquals(orderComparer.getId(), resultOrder.getId());
+        assertEquals(orderComparer.getProducts(), resultOrder.getProducts());
+        assertEquals(orderComparer.getOrderTime(), resultOrder.getOrderTime());
+        assertEquals(orderComparer.getAuthor(), resultOrder.getAuthor());
+        assertEquals(orderComparer.getStatus(), resultOrder.getStatus());
     }
 //    @Test
 //    void testSaveUpdate(){
@@ -53,36 +77,45 @@ public class PaymentRepositoryTest {
 //    }
     @Test
     void testFindByIdIfIdFound () {
-        for (Payment payment : paymentList) {
-            paymentRepository.save(payment);
+        for (Map<Payment, Order> pair : paymentList) {
+            paymentRepository.save(pair);
         }
 
-        Payment findResult = paymentRepository.findById(paymentList.get(1).getId());
-        assertEquals(paymentList.get(1).getId(), findResult.getId());
-        assertEquals(paymentList.get(1).getMethod(), findResult.getMethod());
-        assertEquals(paymentList.get(1).getPaymentData(), findResult.getPaymentData());
-        assertEquals(paymentList.get(1).getStatus(), findResult.getStatus());
+        Payment payment = paymentList.get(1).keySet().stream().toList().get(0);
+        Map<Payment, Order> findResult = paymentRepository.findById(payment.getId());
+        Payment resultPayment = findResult.keySet().stream().toList().get(0);
+        assertEquals(payment.getId(), resultPayment.getId());
+        assertEquals(payment.getMethod(), resultPayment.getMethod());
+        assertEquals(payment.getPaymentData(), resultPayment.getPaymentData());
+        assertEquals(payment.getStatus(), resultPayment.getStatus());
+        Order resultOrder = findResult.get(resultPayment);
+        Order orderComparer = paymentList.get(1).get(payment);
+        assertEquals(orderComparer.getId(), resultOrder.getId());
+        assertEquals(orderComparer.getProducts(), resultOrder.getProducts());
+        assertEquals(orderComparer.getOrderTime(), resultOrder.getOrderTime());
+        assertEquals(orderComparer.getAuthor(), resultOrder.getAuthor());
+        assertEquals(orderComparer.getStatus(), resultOrder.getStatus());
     }
     @Test
     void testFindByIdIfIdNotFound () {
-        for (Payment payment : paymentList) {
-            paymentRepository.save(payment);
+        for (Map<Payment, Order> pair : paymentList) {
+            paymentRepository.save(pair);
         }
 
-        Payment findResult = paymentRepository.findById("zczc");
+        Map<Payment, Order> findResult = paymentRepository.findById("zczc");
         assertNull(findResult);
     }
     @Test
     void testFindAll() {
-        for (Payment payment : paymentList) {
-            paymentRepository.save(payment);
+        for (Map<Payment, Order> pair : paymentList) {
+            paymentRepository.save(pair);
         }
 
-        Iterator<Payment> findResult = paymentRepository.findAll();
+        Iterator<Map<Payment, Order>> findResult = paymentRepository.findAll();
         assertTrue(findResult.hasNext());
-        Payment savedPayment = findResult.next();
-        assertEquals(paymentList.get(0).getId(), savedPayment.getId());
-        savedPayment = findResult.next();
-        assertEquals(paymentList.get(1).getId(), savedPayment.getId());
+        Payment savedPayment = findResult.next().keySet().stream().toList().get(0);
+        assertEquals(paymentList.get(0).keySet().stream().toList().get(0).getId(), savedPayment.getId());
+        savedPayment = findResult.next().keySet().stream().toList().get(0);
+        assertEquals(paymentList.get(1).keySet().stream().toList().get(0).getId(), savedPayment.getId());
     }
 }
