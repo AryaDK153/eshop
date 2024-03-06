@@ -36,3 +36,18 @@ Applied in this project:
   > If we are to ignore the integrations proposed by point 2 and 3, I'd say ISP is well implemented by separating ProductService.java and CarService.java. Though, even when taking into account the integrations from point 2 and 3, it is theoretically possible to have some service methods combined between the two and some other methods separate. This opens up a possibility to add different interfaces for classes who are children of the Product class. 
 5. DIP = CarController.java and CarService.java
   > Instead of calling CarServiceImpl straight away on the controller, I have made it so that it calls on the CarService interface instead. This was done to reduce coupling.
+
+## Module 4
+### TDD
+
+1. I feel like, yes, TDD flow will be very useful for me in more future works. The reason being is that most of the time, it's just very hard to focus on what tp implement. However, with TDD, we can make sure to only implement what's needed. For example, when making the product class back in tutorial module 1, I ran into and issue where I don't know how I want the implementation to be like. But this time, when making the order class with TDD, it feels much clearer on what I want and how I want to implement.
+2. Here are my analysis on how fulfilled the F.I.R.S.T principle is in current tutorial module:
+> Fast, yes, we have separated unit tests and functional tests. That way, we can get the results for unit tests without waiting for functional tests' results and vice versa.
+
+> Isolated/Independent, yes, using MockitoExtension we can call functions without interfering with the actual implementations. We also use setUp() annotated with @BeforeEach to avoid test cases, in a way, crashing into each other.
+
+> Repeatable, if the test results stay the same after different testing times, then we are good to go. In this case, yes, the tests are repeatable.
+
+> Self-Validating, yes, we are using assertions to determine whether the tests pass or not. There is one thing I still haven't fully grasp, which is, one test one assertion, does that mean the multiple assertions actually violates the Fast part of the principle?
+
+> Thorough/Timely, for now yes, we have tried to cover as much Happy and Unhappy tests as possible to improve the product quality. Make sure to prepare the product for every thinkable errors during development planning.
