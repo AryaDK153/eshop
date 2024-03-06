@@ -69,7 +69,7 @@ public class PaymentRepositoryTest {
             paymentRepository.save(payment);
         }
 
-        Order findResult = paymentRepository.findById("zczc");
+        Payment findResult = paymentRepository.findById("zczc");
         assertNull(findResult);
     }
     @Test
